@@ -1,0 +1,6 @@
+recursive-include cbopensource *
+recursive-include root/etc *
+recursive-include root/usr *
+recursive-include scripts
+
+include cb-lastline-connector.spec
