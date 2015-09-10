@@ -29,20 +29,27 @@ class LastlineProvider(BinaryAnalysisProvider):
             if not task_uuid:
                 raise AnalysisTemporaryError(message="No UUID for result: %s" % response, retry_in=120)
 
+        return task_uuid
+
     def make_result(self, task_uuid):
         try:
             result = self.lastline_analysis.get_result(task_uuid)
             result = result.get('data', {})
+        except Exception as e:
+            raise AnalysisTemporaryError(message="API error: %s" % str(e), retry_in=120)
+        else:
             if 'error' in result:
                 raise AnalysisTemporaryError(message=result['error'], retry_in=120)
             score = int(result.get('score', 0))
-            malware_result = "%smalware" % ("not" if score == 0 else "")
-        except AnalysisAPIError as e:
-            raise AnalysisTemporaryError(message="API error: %s" % e.message, retry_in=120)
+            if score == 0:
+                malware_result = "Benign"
+            else:
+                reasons = "; ".join(result.get('malicious_activity', []))
+                malware_result = "Potential malware: %s" % reasons
 
-        return AnalysisResult(message=malware_result, extended_message="",
-                              link=re.sub("(?<!:)/{2,}", "/", "%s/%s" % (self.feed_link_prefix, task_uuid)),
-                              score=score)
+            return AnalysisResult(message=malware_result, extended_message="",
+                                  link=re.sub("(?<!:)/{2,}", "/", "%s/%s" % (self.feed_link_prefix, task_uuid)),
+                                  score=score)
 
     def check_result_for(self, md5sum):
         try:
@@ -51,7 +58,7 @@ class LastlineProvider(BinaryAnalysisProvider):
             # the file does not exist yet.
             return None
         except AnalysisAPIError as e:
-            raise AnalysisTemporaryError(message="API error: %s" % e.message, retry_in=120)
+            raise AnalysisTemporaryError(message="API error: %s" % str(e), retry_in=120)
         else:
             task_uuid = self.get_uuid(response)
             return self.make_result(task_uuid)
@@ -62,7 +69,7 @@ class LastlineProvider(BinaryAnalysisProvider):
         try:
             response = self.lastline_analysis.submit_file(binary_file_stream)
         except AnalysisAPIError as e:
-            raise AnalysisTemporaryError(message="API error: %s" % e.message, retry_in=120)
+            raise AnalysisTemporaryError(message="API error: %s" % str(e), retry_in=120)
 
         task_uuid = self.get_uuid(response)
 
