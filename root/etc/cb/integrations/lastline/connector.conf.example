@@ -8,7 +8,7 @@
 ; listener_port
 ; port to listen for incoming feed requests
 ;
-listener_port=6352
+listener_port=4000
 
 ;
 ; listener_address
