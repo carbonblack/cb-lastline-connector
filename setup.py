@@ -149,7 +149,7 @@ scripts = {
 
 setup(
     name='python-cb-lastline-connector',
-    version='1.0',
+    version='1.1',
     packages=['cbopensource', 'cbopensource.connectors', 'cbopensource.connectors.lastline'],
     url='https://github.com/carbonblack/cb-lastline-connector',
     license='MIT',
