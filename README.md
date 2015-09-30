@@ -22,6 +22,7 @@ If you suspect a problem, please first look at the Lastline connector logs found
 (There might be multiple files as the logger "rolls over" when the log file hits a certain size).
 
 If you want to re-run the analysis across your binaries:
+
 1. Stop the service: `service cb-lastline-connector stop`
 2. Remove the database file: `rm /usr/share/cb/integrations/lastline/db/sqlite.db`
 3. Remove the feed from your Cb server's Threat Intelligence page
