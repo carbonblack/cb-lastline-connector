@@ -27,7 +27,41 @@ feed_host=127.0.0.1
 ; binary_filter_query
 ; Additional query options to filter only binaries of interest to the Lastline connector
 ;
-binary_filter_query=is_executable_image:true is_64bit:false -digsig_publisher:"Microsoft Corporation"
+binary_filter_query=is_executable_image:true -digsig_publisher:"Microsoft Corporation"
+
+;
+; Lastline API key
+; This key is given to you from lastline
+; it can be found either by connecting your lastline rep,
+; the lastline cli, or by looking under the license pull down under
+; the admin tab. The key will be under "License Key"
+;
+lastline_api_key=
+
+;
+; Lastline API token
+; This key is given to you from lastline
+; it can be found either by connecting your lastline rep or
+; the lastline cli.
+;
+lastline_api_token=
+
+;
+; Lastline URL
+; url for Lastline api
+; this url specifies your local or cloud lastline appliance
+; cloud example: https://analysis.lastline.com
+; local example: https://lastline.companyDomain.local
+;
+; NOTE: do NOT use https://user.lastline.com; instead, use https://analysis.lastline.com
+;
+lastline_url=https://analysis.lastline.com
+
+;
+; Lastline URL SSL Verification
+; Enter 1 to force ssl verification of the Lastline connection
+;
+lastline_url_sslverify=1
 
 ;
 ; legacy_feed_directory
