@@ -29,6 +29,18 @@ feed_host=127.0.0.1
 ;
 binary_filter_query=is_executable_image:true -digsig_publisher:"Microsoft Corporation"
 
+; Concurrency settings
+;
+; The following two parameters control how many concurrent queries will be
+; performed against the LastLine server. The "quick_scan_threads" setting
+; specifies how many threads will be querying the LastLine appliance via
+; file hash at once. The "deep_scan_threads" setting specifies how many
+; full file scans can be actively "in flight" at a given time. The default
+; is that three files can be analyzed in parallel at any given time.
+
+;lastline_quick_scan_threads=1
+;lastline_deep_scan_threads=3
+
 ;
 ; Lastline API key
 ; This key is given to you from lastline
