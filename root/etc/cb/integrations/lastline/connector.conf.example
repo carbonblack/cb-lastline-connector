@@ -102,6 +102,11 @@ carbonblack_server_sslverify=0
 
 
 ;
+; Number of day before a rescan will be attempted
+;
+; max_days_before_rescan=7
+
+;
 ; debugging options
 ;
 
