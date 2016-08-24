@@ -104,6 +104,10 @@ class LastlineConnector(DetonationDaemon):
     def num_deep_scan_threads(self):
         return self.get_config_integer("lastline_deep_scan_threads", 3)
 
+    @property
+    def num_days_before_rescan(self):
+        return self.get_config_integer("max_days_before_rescan", 365)
+        
     def get_provider(self):
         lastline_provider = LastlineProvider(self.name, self.lastline_url, self.lastline_api_key,
                                              self.lastline_api_token, verify_ssl=self.lastline_verify_ssl)
