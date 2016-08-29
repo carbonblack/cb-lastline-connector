@@ -1,4 +1,4 @@
 requests==2.2.0
--e git://github.com/carbonblack/cbapi.git#egg=cbapi&subdirectory=client_apis/python
+cbapi==0.8.1
 -e git://github.com/carbonblack/cbfeeds.git#egg=cbfeeds
 -e git://github.com/carbonblack/cb-integration.git#egg=cbint
