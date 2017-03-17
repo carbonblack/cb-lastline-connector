@@ -1,5 +1,5 @@
 requests==2.2.0
 cbapi==0.8.1
 cbfeeds==0.8.0
-cbint==0.8.2
+cbint==0.8.3
 pyinstaller==3.1.1
