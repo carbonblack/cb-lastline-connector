@@ -10,7 +10,7 @@
 # Source function library.
 . /etc/rc.d/init.d/functions
 
-exec="/usr/share/cb/integrations/lastline/cb-lastline-connector"
+exec="/usr/share/cb/integrations/lastline/bin/cb-lastline-connector"
 prog="cb-lastline-connector"
 pidfile="/var/run/cb/integrations/lastline.pid"
 

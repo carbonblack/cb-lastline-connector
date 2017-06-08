@@ -55,6 +55,7 @@ class LastlineProvider(BinaryAnalysisProvider):
         try:
             response = self.lastline_analysis.submit_file_hash(md5=md5sum)
         except FileNotAvailableError as e:
+            log.info("check_result_for: FileNotAvailable")
             # the file does not exist yet.
             return None
         except AnalysisAPIError as e:
@@ -95,6 +96,10 @@ class LastlineConnector(DetonationDaemon):
             filters.append(additional_filter_requirements)
 
         return ' '.join(filters)
+
+    @property
+    def integration_name(self):
+        return 'Cb LastLine Connector 1.2.5'
 
     @property
     def num_quick_scan_threads(self):
