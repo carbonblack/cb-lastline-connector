@@ -105,13 +105,3 @@ carbonblack_server_sslverify=0
 ; Default: 365 days
 ;
 days_rescan=365
-
-
-;
-; debugging options
-;
-
-; debug
-; enables various debug output
-;
-debug=1
