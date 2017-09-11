@@ -1,12 +1,13 @@
 from cbint.utils.detonation import DetonationDaemon, ConfigurationError
-from cbint.utils.detonation.binary_analysis import (BinaryAnalysisProvider, AnalysisPermanentError,
-                                                    AnalysisTemporaryError, AnalysisResult)
+from cbint.utils.detonation.binary_analysis import (BinaryAnalysisProvider,
+                                                    AnalysisPermanentError,
+                                                    AnalysisTemporaryError,
+                                                    AnalysisResult)
 import cbint.utils.feed
 import logging
 from analysis_apiclient import AnalysisClient, AnalysisAPIError, FileNotAvailableError
 from time import sleep
 import re
-
 
 log = logging.getLogger(__name__)
 
@@ -116,10 +117,10 @@ class LastlineConnector(DetonationDaemon):
 
     def get_metadata(self):
         return cbint.utils.feed.generate_feed(self.name, summary="Lastline Detonation Analysis",
-                    tech_data="An on-premise LastLine device or LastLine cloud service account is required to use this feed. There are no requirements to share any data with Carbon Black to use this feed. However, binaries may be shared with Lastline.",
-                    provider_url="http://www.lastline.com/",
-                    icon_path='/usr/share/cb/integrations/lastline/lastline-logo.png',
-                    display_name="Lastline", category="Connectors")
+                                              tech_data="An on-premise LastLine device or LastLine cloud service account is required to use this feed. There are no requirements to share any data with Carbon Black to use this feed. However, binaries may be shared with Lastline.",
+                                              provider_url="http://www.lastline.com/",
+                                              icon_path='/usr/share/cb/integrations/lastline/lastline-logo.png',
+                                              display_name="Lastline", category="Connectors")
 
     def validate_config(self):
         super(LastlineConnector, self).validate_config()
@@ -141,5 +142,5 @@ if __name__ == '__main__':
 
     config_path = os.path.join(my_path, "testing.conf")
     daemon = LastlineConnector('lastlinetest', configfile=config_path, work_directory=temp_directory,
-                                logfile=os.path.join(temp_directory, 'test.log'), debug=True)
+                               logfile=os.path.join(temp_directory, 'test.log'), debug=True)
     daemon.start()

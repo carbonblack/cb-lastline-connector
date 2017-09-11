@@ -64,6 +64,7 @@ import datetime
 import sys
 import time
 from os import path
+from cbint.utils.tls import get_tlsv1_2_session
 
 try:
     import json
@@ -90,15 +91,15 @@ except ImportError:
     # Non-Lastline environment. Reading from config not support/needed.
     get_proxies_from_config = None
 
-try:
-    requests_version = requests.__version__
-    if not requests_version.startswith('2.2'):
-        raise Exception()
-except Exception:
-    requests_version = '?'
-    print >> sys.stderr, "Warning: Your version of requests (%s) might not " \
-                         "be compatible with this module." % requests_version
-    print >> sys.stderr, "Officially supported are versions 2.2.x"
+# try:
+#     requests_version = requests.__version__
+#     if not requests_version.startswith('2.2'):
+#         raise Exception()
+# except Exception:
+#     requests_version = '?'
+#     print >> sys.stderr, "Warning: Your version of requests (%s) might not " \
+#                          "be compatible with this module." % requests_version
+#     print >> sys.stderr, "Officially supported are versions 2.2.x"
 
 
 # copied these values from Lastline utility code (llapi) to make them available
@@ -1993,7 +1994,7 @@ class AnalysisClient(AnalysisClientBase):
             self.__proxies = get_proxies_from_config(config)
         else:
             self.__proxies = proxies
-        self.__session = requests.session()
+        self.__session = get_tlsv1_2_session()
 
     def set_key(self, key):
         self.__key = key
