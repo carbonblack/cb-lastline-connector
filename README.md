@@ -42,14 +42,13 @@ If you want to re-run the analysis across your binaries:
 3. Remove the feed from your Cb server's Threat Intelligence page
 4. Restart the service: `service cb-lastline-connector start`
 
-## Contacting Bit9 Developer Relations Support
+## Contacting Carbon Black Developer Relations Support
 
-Web: https://community.bit9.com/groups/developer-relations
-E-mail: dev-support@bit9.com
+E-mail: dev-support@carbonblack.com
 
 ### Reporting Problems
 
-When you contact Bit9 Developer Relations Technical Support with an issue, please provide the following:
+When you contact Carbon Black Developer Relations Technical Support with an issue, please provide the following:
 
 * Your name, company name, telephone number, and e-mail address
 * Product name/version, CB Server version, CB Sensor version
