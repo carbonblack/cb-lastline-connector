@@ -1,14 +1,17 @@
-# Carbon Black - Lastline Connector
+# Carbon Black EDR - Lastline Connector
 
-The LastLine connector submits binaries collected by Carbon Black to a LastLine
+NOTE: This connector integrates the Carbon Black EDR product with LastLine.  Integration
+with Carbon Black Cloud products, including "NGAV" and "Enterprise EDR" is not included here.
+
+The LastLine connector submits binaries collected by the Carbon Black EDR to a LastLine
 appliance for binary analysis. The results are collected and placed into an Intelligence
-Feed on your Carbon Black server. The feed will then tag any binaries executed on your
+Feed on your Carbon Black EDR server. The feed will then tag any binaries executed on your
 endpoints identified as malware by LastLine. Only binaries submitted by the connector
 for analysis will be included in the generated Intelligence Feed.
 
 ## Installation Quickstart
 
-As root on your Carbon Black or other RPM based 64-bit Linux distribution server:
+As root on your Carbon Black EDR or other RPM based 64-bit Linux distribution server:
 ```
 cd /etc/yum.repos.d
 curl -O https://opensource.carbonblack.com/release/x86_64/CbOpenSource.repo
