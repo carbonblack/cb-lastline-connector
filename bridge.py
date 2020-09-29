@@ -100,7 +100,7 @@ class LastlineConnector(DetonationDaemon):
 
     @property
     def integration_name(self):
-        return 'Cb LastLine Connector 1.2.11'
+        return 'Cb LastLine Connector 1.2.12'
 
     @property
     def num_quick_scan_threads(self):
