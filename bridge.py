@@ -19,7 +19,7 @@ class LastlineProvider(BinaryAnalysisProvider):
                                                 verify_ssl=verify_ssl)
         self.feed_link_prefix = "%s/portal#/analyst/task/" % lastline_url
         if self.feed_link_prefix.lower().find("analysis.lastline.com") >= 0:
-            self.feed_link_prefix = "https://user.lastline.com/malscape/#/task/"
+            self.feed_link_prefix = "https://user.lastline.com/portal#/analyst/task/"
 
     def get_uuid(self, response):
         try:
