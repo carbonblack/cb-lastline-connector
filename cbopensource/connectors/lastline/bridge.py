@@ -17,9 +17,9 @@ class LastlineProvider(BinaryAnalysisProvider):
         super(LastlineProvider, self).__init__(name)
         self.lastline_analysis = AnalysisClient(lastline_url, lastline_api_key, lastline_api_token,
                                                 verify_ssl=verify_ssl)
-        self.feed_link_prefix = "%s/malscape/#/task/" % lastline_url
+        self.feed_link_prefix = "%s/portal#/analyst/task/" % lastline_url
         if self.feed_link_prefix.lower().find("analysis.lastline.com") >= 0:
-            self.feed_link_prefix = "https://user.lastline.com/malscape/#/task/"
+            self.feed_link_prefix = "https://user.lastline.com/portal#/analyst/task/"
 
     def get_uuid(self, response):
         try:
@@ -100,7 +100,7 @@ class LastlineConnector(DetonationDaemon):
 
     @property
     def integration_name(self):
-        return 'Cb LastLine Connector 1.2.11'
+        return 'Cb LastLine Connector 1.2.12'
 
     @property
     def num_quick_scan_threads(self):
