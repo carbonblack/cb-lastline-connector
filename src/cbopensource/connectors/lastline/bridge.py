@@ -1,13 +1,14 @@
-from cbint.utils.detonation import DetonationDaemon, ConfigurationError
+import logging
+import re
+from time import sleep
+
+import cbint.utils.feed
+from cbint.utils.detonation import DetonationDaemon
 from cbint.utils.detonation.binary_analysis import (BinaryAnalysisProvider,
-                                                    AnalysisPermanentError,
                                                     AnalysisTemporaryError,
                                                     AnalysisResult)
-import cbint.utils.feed
-import logging
-from analysis_apiclient import AnalysisClient, AnalysisAPIError, FileNotAvailableError
-from time import sleep
-import re
+
+from .analysis_apiclient import AnalysisClient, AnalysisAPIError, FileNotAvailableError
 
 log = logging.getLogger(__name__)
 
@@ -61,9 +62,11 @@ class LastlineProvider(BinaryAnalysisProvider):
             return None
         except AnalysisAPIError as e:
             raise AnalysisTemporaryError(message="API error: %s" % str(e), retry_in=120)
-        else:
-            task_uuid = self.get_uuid(response)
-            return self.make_result(task_uuid)
+        except Exception as e:
+            log.info(f"Exception {e}")
+            raise e
+        task_uuid = self.get_uuid(response)
+        return self.make_result(task_uuid)
 
     def analyze_binary(self, md5sum, binary_file_stream):
         log.info("Submitting binary %s to LastLine" % md5sum)
@@ -100,7 +103,7 @@ class LastlineConnector(DetonationDaemon):
 
     @property
     def integration_name(self):
-        return 'Cb LastLine Connector 1.2.12'
+        return 'Cb LastLine Connector 2.0.0-1'
 
     @property
     def num_quick_scan_threads(self):

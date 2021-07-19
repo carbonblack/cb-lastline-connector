@@ -1,6 +1,5 @@
-recursive-include cbopensource *
+recursive-include src/cbopensource *.py
 recursive-include root/etc *
 recursive-include root/usr *
-recursive-include scripts
-
+recursive-include scripts *
 include cb-lastline-connector.spec

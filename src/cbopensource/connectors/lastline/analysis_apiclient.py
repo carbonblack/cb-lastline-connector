@@ -68,22 +68,22 @@ from cbint.utils.tls import get_tlsv1_2_session
 
 try:
     import json
-    import StringIO
+    from io import StringIO
     import requests
     if __name__ == "__main__":
         import optparse
         import IPython
-except ImportError, e:
+except ImportError as e:
     if __name__ == "__main__":
-        print >> sys.stderr, "A module required for running the analysis API example shell was not found:"
-        print >> sys.stderr, "\t'%s'" % str(e)
-        print >> sys.stderr, "Please install the missing module."
-        print >> sys.stderr, "For this, you can use tools such as easy_install or pip:"
-        print >> sys.stderr, "\t easy_install <MODULE_NAME>"
-        print >> sys.stderr, "\t pip install <MODULE_NAME>"
+        print("A module required for running the analysis API example shell was not found:", file=sys.stderr)
+        print("\t'%s'" % str(e), file=sys.stderr)
+        print("Please install the missing module.", file=sys.stderr)
+        print("For this, you can use tools such as easy_install or pip:", file=sys.stderr)
+        print("\t easy_install <MODULE_NAME>", file=sys.stderr)
+        print("\t pip install <MODULE_NAME>", file=sys.stderr)
         sys.exit(1)
     else:
-        raise
+        raise e
 
 try:
     from llapi_client import get_proxies_from_config
@@ -316,9 +316,12 @@ def purge_none(d):
     """
     Purge None entries from a dictionary
     """
+    keys_to_purge = []
     for k in d.keys():
         if d[k] is None:
-            del d[k]
+            keys_to_purge.append(k)
+    for key in keys_to_purge:
+        del d[key]
     return d
 
 
@@ -415,7 +418,7 @@ class TaskCompletion(object):
             # let's give it the trace of the original exception, so we know
             # what the specific problem is!
             trace = sys.exc_info()[2]
-            raise InvalidAnalysisAPIResponse("Unable to parse response to get_completed()"), None, trace
+            raise InvalidAnalysisAPIResponse("Unable to parse response to get_completed()").with_traceback(trace)
 
 
 class AnalysisClientBase(object):
@@ -1266,24 +1269,24 @@ class AnalysisClientBase(object):
             result = self._api_request(url, params, requested_format='raw',
                                        raw=raw, post=True, verify=verify)
             if not result:
-                raise InvalidArtifactError()
+                raise InvalidArtifactError("Invalid artifact")
 
-        except CommunicationError, exc:
+        except CommunicationError as exc:
             internal_error = str(exc.internal_error())
             if internal_error == '410':
-                raise InvalidArtifactError("The artifact is no longer " \
+                raise InvalidArtifactError("The artifact is no longer "
                                            "available")
             if internal_error == '404':
                 raise InvalidArtifactError("The artifact could not be found")
 
             if internal_error == '412':
-                raise InvalidUUIDError()
+                raise InvalidUUIDError("Invalid UUID")
 
             if internal_error == '412':
-                raise InvalidUUIDError()
+                raise InvalidUUIDError("Invalid UUID")
 
             if internal_error == '401':
-                raise PermissionDeniedError()
+                raise PermissionDeniedError("Permission denied")
 
             # we have nothing more specific to say -- raise the
             # original CommunicationError
@@ -2054,7 +2057,7 @@ class AnalysisClient(AnalysisClientBase):
                         proxies=self.__proxies)
             # raise if anything went wrong
             response.raise_for_status()
-        except requests.RequestException, exc:
+        except requests.RequestException as exc:
             if self.__logger:
                 self.__logger.error("Error contacting Malscape API: %s", exc)
             # raise a wrapped exception
