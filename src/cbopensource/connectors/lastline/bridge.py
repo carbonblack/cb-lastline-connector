@@ -49,7 +49,7 @@ class LastlineProvider(BinaryAnalysisProvider):
                 reasons = "; ".join(result.get('malicious_activity', []))
                 malware_result = "Potential malware: %s" % reasons
 
-            return AnalysisResult(message=malware_result, extended_message="",
+            return AnalysisResult(title=f"Lastline Analysis Task-{task_uuid}", message=malware_result, extended_message="",
                                   link=re.sub("(?<!:)/{2,}", "/", "%s/%s" % (self.feed_link_prefix, task_uuid)),
                                   score=score)
 
