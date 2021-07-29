@@ -8,7 +8,8 @@ from cbint.utils.detonation.binary_analysis import (BinaryAnalysisProvider,
                                                     AnalysisTemporaryError,
                                                     AnalysisResult)
 
-from .analysis_apiclient import AnalysisClient, AnalysisAPIError, FileNotAvailableError
+from .analysis_apiclient import AnalysisClient, AnalysisAPIError, FileNotAvailableError, PermissionDeniedError, \
+    InvalidCredentialsError
 
 log = logging.getLogger(__name__)
 
@@ -56,6 +57,9 @@ class LastlineProvider(BinaryAnalysisProvider):
     def check_result_for(self, md5sum):
         try:
             response = self.lastline_analysis.submit_file_hash(md5=md5sum)
+        except PermissionDeniedError as e:
+            log.warning(f"Permission denied checking file hash {md5sum}!")
+            raise AnalysisTemporaryError(message="API error: %s" % str(e), retry_in=120)
         except FileNotAvailableError as e:
             log.info("check_result_for: FileNotAvailable")
             # the file does not exist yet.
@@ -73,6 +77,9 @@ class LastlineProvider(BinaryAnalysisProvider):
 
         try:
             response = self.lastline_analysis.submit_file(binary_file_stream)
+        except PermissionDeniedError as e:
+            log.warning(f"Permission to submit files was denied!")
+            raise AnalysisTemporaryError(message="API error: %s" % str(e), retry_in=120)
         except AnalysisAPIError as e:
             raise AnalysisTemporaryError(message="API error: %s" % str(e), retry_in=120)
 
@@ -134,8 +141,20 @@ class LastlineConnector(DetonationDaemon):
         self.lastline_api_token = self.get_config_string("lastline_api_token", None)
         self.lastline_verify_ssl = self.get_config_boolean("lastline_server_sslverify", False)
 
-        return True
+        return self.validate_api_credentials()
 
+    def validate_api_credentials(self):
+        lastline_analysis_client = AnalysisClient(self.lastline_url, self.lastline_api_key, self.lastline_api_token,
+                                                verify_ssl=self.lastline_verify_ssl)
+        try:
+            lastline_analysis_client._login()
+        except InvalidCredentialsError as ie:
+            log.error(f"Configured lastline api credentials are invalid.")
+            return False
+        except Exception as e:
+            log.error(f"Lastline credentials validation failed with: {e}")
+            return False
+        return True
 
 if __name__ == '__main__':
     import os
