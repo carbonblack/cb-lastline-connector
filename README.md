@@ -1,4 +1,4 @@
-# VMWare Carbon Black EDR - Lastline Connector
+# VMware Carbon Black EDR - Lastline Connector
 
 
 NOTE: This connector integrates the VMWare Carbon Black EDR product with LastLine.  Integration
@@ -31,6 +31,8 @@ in the `lastline_url` variable and set `lastline_url_sslverify` to `0` if your a
 certificate.
 
 Any errors will be logged into `/var/log/cb/integrations/lastline/lastline.log`.
+
+Ensure that the configured API credentials are upto date, and have permissions to submit files for analysis.
 
 ## Troubleshooting
 
