@@ -1,12 +1,12 @@
 # VMware Carbon Black EDR - Lastline Connector
 
 
-NOTE: This connector integrates the VMWare Carbon Black EDR product with LastLine.  Integration
+NOTE: This connector integrates the VMWare Carbon Black EDR product with Lastline.  Integration
 with VMWare Carbon Black Cloud products, including "NGAV" and "Enterprise EDR" is not included here.
-The LastLine connector submits binaries collected by the VMware Carbon Black EDR to a LastLine
+The Lastline connector submits binaries collected by the VMware Carbon Black EDR to a Lastline
 appliance for binary analysis. The results are collected and placed into an Intelligence
 Feed on your VMWare Carbon Black EDR server. The feed will then tag any binaries executed on your
-endpoints identified as malware by LastLine. Only binaries submitted by the connector
+endpoints identified as malware by Lastline. Only binaries submitted by the connector
 for analysis will be included in the generated Intelligence Feed.
 
 ## Installation Quickstart
@@ -22,11 +22,11 @@ Once the software is installed via YUM, copy the `/etc/cb/integrations/lastline/
 `/etc/cb/integrations/lastline/connector.conf`. Edit this file and place your Carbon Black API key into the
 `carbonblack_server_token` variable and your Carbon Black server's base URL into the `carbonblack_server_url` variable.
 
-Then you must place your credentials for LastLine into the configuration file: place your API key and API token
+Then you must place your credentials for Lastline into the configuration file: place your API key and API token
 respectively into the `lastline_api_key` and `lastline_api_token` variables in the 
 `/etc/cb/integrations/lastline/connector.conf` file.
 
-If you are using an on-premise LastLine appliance, make sure to place the URL for your on-premise LastLine appliance
+If you are using an on-premise Lastline appliance, make sure to place the URL for your on-premise Lastline appliance
 in the `lastline_url` variable and set `lastline_url_sslverify` to `0` if your appliance does not have a valid SSL
 certificate.
 
