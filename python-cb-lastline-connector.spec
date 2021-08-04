@@ -1,6 +1,6 @@
 %define name python-cb-lastline-connector
 %define version 2.0.0
-%define release 1
+%define release 2
 %global _enable_debug_package 0
 %global debug_package %{nil}
 %global __os_install_post /usr/lib/rpm/brp-compress %{nil}
