@@ -82,6 +82,8 @@ class LastlineProvider(BinaryAnalysisProvider):
             raise AnalysisTemporaryError(message="API error: %s" % str(e), retry_in=120)
         except AnalysisAPIError as e:
             raise AnalysisTemporaryError(message="API error: %s" % str(e), retry_in=120)
+        except Exception as e:
+            raise AnalysisTemporaryError(message="API error: %s" % str(e), retry_in=120)
 
         task_uuid = self.get_uuid(response)
 
@@ -140,8 +142,17 @@ class LastlineConnector(DetonationDaemon):
         self.lastline_api_key = self.get_config_string("lastline_api_key", None)
         self.lastline_api_token = self.get_config_string("lastline_api_token", None)
         self.lastline_verify_ssl = self.get_config_boolean("lastline_server_sslverify", False)
+        self.log_level = None
+        self.log_level = self.get_config_string("log_level", None)
+        self.handle_logging()
 
         return self.validate_api_credentials()
+
+    def handle_logging(self):
+        if self.log_level != None:
+            root_logger = logging.getLogger()
+            root_logger.setLevel(self.log_level)
+            logging.getLogger("requests").setLevel(self.log_level)
 
     def validate_api_credentials(self):
         lastline_analysis_client = AnalysisClient(self.lastline_url, self.lastline_api_key, self.lastline_api_token,
