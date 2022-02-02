@@ -2,9 +2,11 @@
 LABEL=edrlastlineconnector
 IMAGE=lastlineconnector/centos7:latest
 FEED_PORT=6100
+CONFIG_DIR_EXTERNAL=/etc/cb/integrations/lastline
 CONFIG_DIR=/etc/cb/integrations/lastline
+LOG_DIR_EXTERNAL=/var/log/cb/integrations/lastline
 LOG_DIR=/var/log/cb/integrations/lastline
-MOUNT_POINTS="--mount type=bind,source=$CONFIG_DIR,target=$CONFIG_DIR --mount type=bind,source=$LOG_DIR,target=$LOG_DIR"
+MOUNT_POINTS="--mount type=bind,source=$CONFIG_DIR_EXTERNAL,target=$CONFIG_DIR --mount type=bind,source=$LOG_DIR_EXTERNAL,target=$LOG_DIR"
 SERVICE_START='systemctl start cb-lastline-connector'
 CONTAINER_RUNNING=$(docker inspect --format="{{.State.Running}}" $LABEL 2> /dev/null)
 if [ "$CONTAINER_RUNNING" == "true" ]; then
