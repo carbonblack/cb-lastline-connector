@@ -1,6 +1,7 @@
 #!/bin/bash
 LABEL=edrlastlineconnector
 IMAGE=lastlineconnector/centos7:latest
+FEED_PORT=6100
 CONFIG_DIR=/etc/cb/integrations/lastline
 LOG_DIR=/var/log/cb/integrations/lastline
 MOUNT_POINTS="--mount type=bind,source=$CONFIG_DIR,target=$CONFIG_DIR --mount type=bind,source=$LOG_DIR,target=$LOG_DIR"
@@ -10,7 +11,7 @@ if [ "$CONTAINER_RUNNING" == "true" ]; then
   STARTUP_COMMAND="echo EDR Lastline Connector container already running"
   STATUS_COMMAND="docker exec $LABEL systemctl status cb-lastline-connector"
 else
-  STARTUP_COMMAND="docker run -d --rm $MOUNT_POINTS --name $LABEL $IMAGE $SERVICE_START"
+  STARTUP_COMMAND="docker run -p $FEED_PORT:$FEED_PORT -d --rm $MOUNT_POINTS --name $LABEL $IMAGE $SERVICE_START"
   STATUS_COMMAND="echo EDR Lastline Connector container is stopped"
 fi
 SHUTDOWN_COMMAND="docker stop $LABEL"
