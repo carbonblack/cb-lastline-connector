@@ -9,3 +9,4 @@ pluginManagement {
 rootProject.name = "lastline"
 
 include(":smoketest")
+include(":docker")
