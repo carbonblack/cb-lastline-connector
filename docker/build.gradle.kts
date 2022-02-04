@@ -23,8 +23,7 @@ val osVersionClassifier: String
         }
     }
 
-val createProdDockerFile = tasks.register<Dockerfile>("createProdDockerfile") {
-    from(System.getenv()["BASE_IMAGE"])
+val createProdDockerFile = tasks.register("createProdDockerfile") {
     val rpmDir = "${rootProject.buildDir}/rpm"
     val findCommand = "find \"$rpmDir\" -name \"*.rpm\" -print -quit"
     val output = ByteArrayOutputStream()
@@ -39,8 +38,12 @@ val createProdDockerFile = tasks.register<Dockerfile>("createProdDockerfile") {
         destinationFile.delete()
     }
     rpmFile.copyTo(destinationFile)
-    addFile(rpmFile.name, "/tmp")
-    runCommand("yum -y install /tmp/${rpmFile.name}")
+    val dockerfile = File("docker/Dockerfile")
+    val destinationDockerFile = File("docker/build/docker/Dockerfile")
+    if (destinationDockerFile.exists()) {
+        destinationDockerFile.delete()
+    }
+    dockerfile.copyTo(destinationDockerFile)
 }
 
 val createProdImage = tasks.register<DockerBuildImage>("createProdImage") {
