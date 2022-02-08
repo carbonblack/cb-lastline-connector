@@ -7,7 +7,11 @@ CONFIG_DIR=/etc/cb/integrations/lastline
 LOG_DIR_EXTERNAL=/var/log/cb/integrations/lastline
 LOG_DIR=/var/log/cb/integrations/lastline
 MOUNT_POINTS="--mount type=bind,source=$CONFIG_DIR_EXTERNAL,target=$CONFIG_DIR --mount type=bind,source=$LOG_DIR_EXTERNAL,target=$LOG_DIR"
-SHUTDOWN_COMMAND="docker stop $LABEL"
+SHUTDOWN_COMMAND=stop_and_remove_container
+stop_and_remove_container() {
+    docker stop $LABEL > /dev/null
+    docker rm $LABEL > /dev/null
+}
 STARTUP_COMMAND="docker run -p $FEED_PORT:$FEED_PORT -d --rm $MOUNT_POINTS --name $LABEL $IMAGE"
 STATUS_COMMAND=get_container_status
 
