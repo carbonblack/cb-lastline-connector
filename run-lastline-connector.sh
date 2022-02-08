@@ -12,7 +12,7 @@ stop_and_remove_container() {
     docker stop $LABEL > /dev/null
     docker rm $LABEL > /dev/null
 }
-STARTUP_COMMAND="docker run -p $FEED_PORT:$FEED_PORT -d --rm $MOUNT_POINTS --name $LABEL $IMAGE"
+STARTUP_COMMAND="docker run -p $FEED_PORT:$FEED_PORT -d --restart unless-stopped $MOUNT_POINTS --name $LABEL $IMAGE"
 STATUS_COMMAND=get_container_status
 
 get_container_status () {
