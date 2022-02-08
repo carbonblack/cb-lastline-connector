@@ -19,9 +19,7 @@ useradd --shell /sbin/nologin --gid cb --comment "Service account for VMware Car
 cp $2/connector.conf /etc/cb/integrations/lastline/connector.conf
 cd $2/../test ; FLASK_APP=smoke_test_server.py python3.8 -m flask run --cert=adhoc &
 echo Starting service...
-#sleep 999999
-service cb-lastline-connector start
-#sleep 999999
+/tmp/entrypoint.sh &
 sleep 7
 grep "Analyzed md5sum:" /var/log/cb/integrations/lastline/lastline.log >/dev/null
 if [ $? -eq 1 ]

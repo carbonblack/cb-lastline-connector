@@ -46,6 +46,12 @@ val createProdDockerFile = tasks.register("createProdDockerfile") {
             destinationDockerFile.delete()
         }
         dockerfile.copyTo(destinationDockerFile)
+        var entrypoint = File("docker/entrypoint.sh")
+        val destinationEntrypoint = File("docker/build/docker/entrypoint.sh")
+        if (destinationEntrypoint.exists()) {
+            destinationEntrypoint.delete()
+        }
+        entrypoint.copyTo(destinationEntrypoint)
     }
 }
 
