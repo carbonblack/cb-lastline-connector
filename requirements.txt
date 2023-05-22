@@ -1,6 +1,6 @@
 cbfeeds==1.0.0
 cbint==1.0.4
-requests==2.21.0
+requests==2.31.0
 flask==1.1.4
 pyinstaller==4.2
 cbapi==1.7.5
